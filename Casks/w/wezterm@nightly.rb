@@ -26,6 +26,8 @@ cask "wezterm@nightly" do
          target: "#{HOMEBREW_PREFIX}/etc/bash_completion.d/wezterm"
   binary "#{appdir}/WezTerm.app/Contents/Resources/shell-completion/fish",
          target: "#{HOMEBREW_PREFIX}/share/fish/vendor_completions.d/wezterm.fish"
+  binary "#{appdir}/WezTerm.app/Contents/Resources/terminfo/77/wezterm",
+         target: "#{ENV.fetch("TERMINFO", "~/.terminfo")}/77/wezterm"
 
   preflight do
     # Move "WezTerm-macos-#{version}/WezTerm.app" out of the subfolder
@@ -36,5 +38,8 @@ cask "wezterm@nightly" do
     end
   end
 
-  zap trash: "~/Library/Saved Application State/com.github.wez.wezterm.savedState"
+  zap trash: [
+    "~/.terminfo/77/wezterm",
+    "~/Library/Saved Application State/com.github.wez.wezterm.savedState",
+  ]
 end
